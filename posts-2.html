@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글 목록 (2/2) · t3b06-ds-coin-sale</title>
+  <meta name="description" content="t3b06-ds-coin-sale에 올라온 글 목록입니다.">
+  <link rel="canonical" href="https://dangsan-song-tip.mapo-room-guide.xyz/posts-2.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+ /* RESET & BASE */
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+ body {
+ background: #111;
+ color: #ffff00;
+ font-family: 'Courier New', Courier, monospace;
+ line-height: 1.4;
+ font-size: 18px;
+ padding: 0;
+ max-width: none;
+ }
+ a { color: #00ff41; text-decoration: underline 3px; }
+ a:hover { background: #00ff41; color: #111; }
+ h1, h2, h3, h4 {
+ font-weight: 900;
+ letter-spacing: -0.03em;
+ text-transform: uppercase;
+ }
+ h1 { font-size: 4.5rem; line-height: 0.9; margin-bottom: 16px; }
+ h2 { font-size: 3rem; line-height: 1; margin-bottom: 16px; }
+ h3 { font-size: 2.2rem; line-height: 1; }
+ img, svg { display: block; max-width: 100%; height: auto; }
+ ul { list-style: none; }
+
+ /* BRUTALIST UTILITIES */
+ .brutal-border {
+ border: 4px solid #ffff00;
+ padding: 16px;
+ }
+ .skew-left {
+ transform: skew(-4deg);
+ display: inline-block;
+ }
+ .skew-right {
+ transform: skew(4deg);
+ display: inline-block;
+ }
+ .neg-margin-top {
+ margin-top: -2rem;
+ }
+ .full-bleed {
+ width: 100%;
+ }
+
+ /* LAYOUT */
+ .container {
+ padding: 24px;
+ max-width: 1400px;
+ margin: 0 auto;
+ }
+ section {
+ margin-bottom: 40px;
+ padding: 24px;
+ }
+ .block-asymmetric {
+ display: grid;
+ grid-template-columns: 1fr 1.2fr;
+ gap: 16px;
+ }
+ @media (max-width: 768px) {
+ .block-asymmetric {
+ grid-template-columns: 1fr;
+ }
+ }
+
+ /* HEADER & NAV */
+ header {
+ padding: 24px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border-bottom: 4px solid #00ff41;
+ margin-bottom: 16px;
+ position: relative;
+ }
+ .logo {
+ font-size: 2.2rem;
+ font-weight: 900;
+ color: #00ff41;
+ text-shadow: 4px 4px 0 #ffff00;
+ text-transform: uppercase;
+ }
+ nav a {
+ margin-left: 24px;
+ font-weight: bold;
+ font-size: 1.2rem;
+ }
+ /* Hamburger */
+ .hamburger { display: none; }
+ @media (max-width: 768px) {
+ nav a { display: none; }
+ .hamburger {
+ display: block;
+ font-size: 2.5rem;
+ cursor: pointer;
+ background: none;
+ border: none;
+ color: #ffff00;
+ padding: 0 16px;
+ }
+ nav.open a {
+ display: block;
+ margin: 16px 0;
+ padding: 12px;
+ border: 4px solid #ffff00;
+ background: #111;
+ }
+ }
+
+ /* HERO */
+ #hero {
+ padding: 24px;
+ border: 6px solid #00ff41;
+ margin-bottom: 40px;
+ position: relative;
+ overflow: hidden;
+ background: repeating-linear-gradient(
+ 45deg,
+ #111 0px, #111 20px,
+ #1a1a1a 20px, #1a1a1a 22px
+ );
+ }
+ #hero h1 {
+ font-size: 5rem;
+ color: #ffff00;
+ text-shadow: 6px 6px 0 #00ff41;
+ }
+ .hero-sub {
+ font-size: 1.8rem;
+ color: #00ff41;
+ font-weight: bold;
+ margin-top: -8px;
+ transform: rotate(-2deg);
+ }
+ .hero-cta {
+ display: flex;
+ gap: 24px;
+ margin-top: 32px;
+ flex-wrap: wrap;
+ }
+ .hero-cta a {
+ background: #ffff00;
+ color: #111;
+ padding: 16px 40px;
+ font-size: 1.8rem;
+ font-weight: bold;
+ border: 4px solid #111;
+ text-decoration: none;
+ box-shadow: 8px 8px 0 #00ff41;
+ transform: rotate(1deg);
+ }
+ .hero-cta a:hover {
+ background: #00ff41;
+ box-shadow: 8px 8px 0 #ffff00;
+ transform: rotate(-1deg);
+ }
+
+ /* DISCOUNTS */
+ .discount-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+ gap: 16px;
+ }
+ .discount-card {
+ border: 4px solid #ffff00;
+ padding: 20px;
+ background: #1a1a1a;
+ transform: rotate(0.5deg);
+ }
+ .discount-card:nth-child(2n) {
+ transform: rotate(-0.5deg);
+ border-color: #00ff41;
+ }
+ .discount-card h3 {
+ color: #00ff41;
+ margin-bottom: 8px;
+ }
+ .price {
+ font-size: 2rem;
+ color: #ffff00;
+ font-weight: bold;
+ }
+
+ /* REVIEWS (UGC) */
+ .review-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+ gap: 16px;
+ }
+ .review-card {
+ border: 4px solid #ffff00;
+ padding: 20px;
+ background: #0f0f0f;
+ position: relative;
+ }
+ .review-card::before {
+ content: '“';
+ font-size: 5rem;
+ position: absolute;
+ top: -10px;
+ left: 10px;
+ color: #00ff41;
+ opacity: 0.5;
+ font-family: serif;
+ }
+ .review-rating {
+ color: #ffff00;
+ font-size: 1.8rem;
+ margin-bottom: 8px;
+ }
+ .review-meta {
+ font-size: 0.9rem;
+ color: #888;
+ margin-top: 12px;
+ border-top: 2px solid #333;
+ padding-top: 8px;
+ }
+
+ /* FEATURES */
+ #features ul {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 16px;
+ }
+ #features li {
+ border-left: 8px solid #00ff41;
+ padding-left: 16px;
+ font-size: 1.4rem;
+ font-weight: bold;
+ }
+
+ /* MAP PLACEHOLDER */
+ .map-placeholder {
+ background: #1a1a1a;
+ border: 6px dashed #00ff41;
+ padding: 60px 24px;
+ text-align: center;
+ font-size: 2rem;
+ transform: rotate(-1deg);
+ }
+
+ /* FOOTER */
+ footer {
+ border-top: 6px solid #00ff41;
+ padding: 32px 24px;
+ margin-top: 16px;
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: space-between;
+ gap: 24px;
+ }
+ footer .copy {
+ color: #555;
+ font-size: 0.9rem;
+ }
+
+ /* RESPONSE FIX */
+ @media (max-width: 768px) {
+ h1 { font-size: 3rem; }
+ h2 { font-size: 2rem; }
+ .hero-sub { font-size: 1.2rem; }
+ .hero-cta a { font-size: 1.2rem; padding: 12px 24px; }
+ #features ul { grid-template-columns: 1fr; }
+ .discount-grid { grid-template-columns: 1fr; }
+ .review-grid { grid-template-columns: 1fr; }
+ }
+ </style>
+  <meta property="og:title" content="글 목록 (2/2) · t3b06-ds-coin-sale">
+  <meta property="og:description" content="t3b06-ds-coin-sale에 올라온 글 목록입니다.">
+  <meta property="og:url" content="https://dangsan-song-tip.mapo-room-guide.xyz/posts-2.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+</head>
+<body>
+  <div class="container">
+    <header>
+ <div class="logo">
+ 🎤 당산코인
+ </div>
+ <nav id="mainNav">
+ <a href="#hero">홈</a>
+ <a href="#discounts">할인</a>
+ <a href="#reviews">후기</a>
+ 
+ <button class="hamburger" id="hamburgerBtn" aria-label="메뉴">☰</button>
+ </nav>
+ </header>
+    <main>
+      <h1>글 목록</h1>
+      <p>전체 39개 · 2/2 페이지</p>
+      <ul class="post-list">
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260721-0301.html">당산 코인노래방 할인 정보를 활용한 현명한 셔츠룸 사이트 선택 기준</a>
+        <p class="post-item__summary">동네에서 당산 코인노래방 할인 혜택을 찾아 즐거움을 찾듯, 유흥 정보를 구할 때도 체계적인 접근이 필요합니다. 온라인상에 산재한 수많은 정보를 맹신하기보다는 검증된 경로를 통해 접근하는 것이 안전합</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0144.html">당산 코인노래방 할인 확인하고 챙기는 연남 클럽 추천정보</a>
+        <p class="post-item__summary">당산 코인노래방 할인 혜택을 챙기던 습관을 연남 지역의 클럽을 찾는 데에도 적용할 수 있습니다. 클럽은 노래방보다 위치 선정과 접근성이 매우 중요한 요소로 작용하는 공간입니다. 방문 전 확인해야 할</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0145.html">당산 코인노래방 할인 혜택보다 중요한 합정 셔츠룸 추천정보 선택 가이드</a>
+        <p class="post-item__summary">친구들과 급하게 저녁 모임을 계획하다 보면 당산 코인노래방 할인 정보를 찾게 되는 경우가 많습니다. 하지만 단순히 노래만 부르는 것을 넘어 조금 더 색다른 분위기를 즐기고자 한다면 지역적 특색이 뚜</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0146.html">당산 코인노래방 할인 정보에 가려진 공덕 가라오케 추천정보 활용법</a>
+        <p class="post-item__summary">흔히 많은 분이 인근의 당산 코인노래방 할인 혜택을 챙기는 것이 가장 경제적인 유흥이라고 오해하곤 합니다. 하지만 공덕 지역에서 고품질의 서비스를 제공하는 공간을 찾고자 한다면 단순히 저렴한 가격보</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0147.html">당산 코인노래방 할인 대신 알아볼 상수 마사지 추천정보 필수 요소</a>
+        <p class="post-item__summary">일상의 피로를 풀기 위해 필요한 충족 조건은 청결한 환경과 숙련된 전문가, 그리고 합리적인 운영 체계입니다. 보통 당산 코인노래방 할인 이벤트를 찾는 분들도 결국 휴식을 목적으로 하지만, 전문적인 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0148.html">당산 코인노래방 할인 비교하며 고민하는 망원 노래방 추천정보 선정 기준</a>
+        <p class="post-item__summary">여러분은 평소 노래를 부르며 스트레스를 풀 때 어떤 기준을 가지고 장소를 선택하시나요? 당산 코인노래방 할인 정보만을 따라가다 보면 정작 중요한 음향 시설이나 실내 분위기는 뒷전이 되기 쉽습니다. </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0149.html">당산 코인노래방 할인 활용하며 홍대 노래방 추천정보 찾아가는 법</a>
+        <p class="post-item__summary">주변에서 당산 코인노래방 할인 혜택을 챙기듯 실속 있는 유흥 문화를 즐기려는 분들이 많습니다. 홍대 일대의 번화가에는 수많은 시설이 밀집해 있어 어디를 선택해야 할지 고민이 깊어질 수밖에 없습니다.</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0150.html">당산 코인노래방 할인 확인 후 공덕 셔츠룸 추천정보 가격 비교하기</a>
+        <p class="post-item__summary">지인과 함께 시간을 보내려 할 때 당산 코인노래방 할인 정보를 찾는 것처럼 가격대비 가치를 따지는 것은 당연합니다. 특히 공덕 부근의 전문적인 룸 서비스를 이용할 때는 가격 구조가 복잡하여 명확한 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0151.html">당산 코인노래방 할인과 연남 유흥 추천정보 예약 시 실패 유형</a>
+        <p class="post-item__summary">일상의 스트레스를 해소하고자 당산 코인노래방 할인 혜택을 챙기는 마음으로 연남 지역의 유흥 시설을 찾는 이들이 많습니다. 하지만 예약 과정에서 흔히 발생하는 실수를 간과하면 즐거운 시간이 낭패로 변</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0152.html">당산 코인노래방 할인 및 마곡 가라오케 추천정보 접근성 체크</a>
+        <p class="post-item__summary">평소 당산 코인노래방 할인 혜택을 알뜰하게 챙겨 이용하듯, 마곡 지구의 가라오케를 선택할 때도 입지 조건을 따져보는 안목이 필요합니다. 모임의 목적과 동행자의 편의를 고려하면 위치는 서비스의 질만큼</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0153.html">당산 코인노래방 할인 받고 즐기는 마곡 유흥 추천정보 확인하기</a>
+        <p class="post-item__summary">친구들과 저녁 모임을 하다가 갑작스럽게 장소를 옮겨야 하는 상황이 발생하곤 합니다. 처음 방문하는 지역에서 당산 코인노래방 할인 혜택을 찾던 습관처럼 발걸음을 옮기다 보면 예상치 못한 난관에 부딪히</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/gemini-coverage-20260722-0154.html">당산 코인노래방 할인 보다 효율적인 합정 노래방 추천정보 팁</a>
+        <p class="post-item__summary">사람들은 흔히 인기가 많은 지역일수록 저녁 시간에 노래방을 예약하기가 매우 어렵다고 생각합니다. 그러나 이는 특정 시간대와 장소를 제대로 공략하지 못했을 때 생기는 오해일 가능성이 큽니다. 당산 코</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/guide-002-146qpuj.html">MK울트라 프로젝트의 1972년 의회 청문회에서 공개되지 않은 서브프로젝트</a>
+        <p class="post-item__summary">MK울트라는 CIA 비밀 프로젝트였습니다. 스노 Snowden은 NSA 내부고발자입니다. 음모론과 사실의 차이를 이해하십시오.</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/juice-1.html">당산 코인노래방 할인</a>
+        <p class="post-item__summary">당산 지역의 코인노래방은 이용자에게 합리적인 가격의 음향 환경을 제공한다. 다양한 시간대별 할인이 운영되는 경우가 많으며, 평일 주간과 심야 시간대에 가격 변동이 두드러질 수 있다. 이용 전 공식 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/juice-2.html">당산 코인노래방 할인 정보 안내</a>
+        <p class="post-item__summary">당산 지역에는 다양한 코인노래방이 위치하고 있으며, 최근 할인 혜택에 대한 관심이 높아지고 있습니다. 코인노래방을 이용하려는 분들은 먼저 할인 정보를 확인하는 것이 중요합니다. 일반적으로 코인노래방</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/myth-002-1hzg9e6.html">당산 코인노래방 할인에 관한 흔한 오해, 직접 확인해보니 달랐던 점</a>
+        <p class="post-item__summary">당산역 주변 상권은 대중교통 이용이 편리하고 다양한 편의시설이 밀집해 있어 이용객이 꾸준한 편입니다. 그중에서도 당산 코인노래방은 주점이나 식당 이용 전후로 많은 사람들이 찾는 인기 시설 중 하나입</p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-1.html">당산 코인노래방 할인 정보 및 이용 가이드</a>
+        <p class="post-item__summary">당산 지역에서 코인노래방을 이용할 때 가격 부담을 줄이려는 방문객들은 할인 이벤트를 적극 활용하는 것이 현명합니다. 코인노래방은 일반 노래방 대비 낮은 진입 장벽을 자랑하지만, 단발로 이용할 경우 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-2.html">당산 코인노래방 할인 정보 안내</a>
+        <p class="post-item__summary">코인노래방을 찾고 계신다면 지역 내 할인 정보를 먼저 확인하는 것이 중요합니다. 요금은 업소마다 상이하며, 할인 혜택은 운영 정책이나 시즌에 따라 다르게 적용될 수 있습니다. 미리 할인을 알아두면 </p>
+      </li>
+      <li class="post-item">
+        <a class="post-item__link" href="posts/normal-3.html">당산 코인노래방 할인 정보 안내</a>
+        <p class="post-item__summary">당산 지역에서 코인노래방 할인을 찾아볼 때는 우선 여러 업체의 할인 정책이 서로 다르다는 점을 먼저 파악해야 합니다. 일부 업소는 평일과 주말에 상이한 요금 체계를 적용하기도 하며, 시간대별로 할인</p>
+      </li>
+      </ul>
+    <nav class="pager">
+      <a class="pager__link" href="posts.html">1</a>
+      <span class="pager__current">2</span>
+    </nav>
+    </main>
+  </div>
+</body>
+</html>
